@@ -46,9 +46,6 @@
         <EntityType Name="vw_Report">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="客戶名稱" />
-            <PropertyRef Name="聯絡人數量" />
-            <PropertyRef Name="銀行帳戶數量" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="客戶名稱" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -185,9 +182,6 @@
         <EntityType Name="vw_Report">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="客戶名稱" />
-            <PropertyRef Name="聯絡人數量" />
-            <PropertyRef Name="銀行帳戶數量" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="客戶名稱" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
