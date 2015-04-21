@@ -115,6 +115,14 @@ namespace MvcHomework.Controllers
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Report()
+        {
+            return View();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
