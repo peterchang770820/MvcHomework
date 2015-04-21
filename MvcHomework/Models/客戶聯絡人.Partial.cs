@@ -32,6 +32,7 @@ namespace MvcHomework.Models
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
         [Required]
+        [RegularExpression(@"\d{4}-\d{6}",ErrorMessage="格式有誤，EX: 0911-123456")]
         public string 手機 { get; set; }
         [Required]
         public string 電話 { get; set; }
