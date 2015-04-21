@@ -17,7 +17,8 @@ namespace MvcHomework.Controllers
         // GET: 客戶資料
         public ActionResult Index()
         {
-            return View(db.客戶資料.ToList());
+            var model = db.客戶資料.Where(c => !c.是否已刪除).ToList();
+            return View(model);
         }
 
         // GET: 客戶資料/Details/5
@@ -110,7 +111,21 @@ namespace MvcHomework.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             客戶資料 客戶資料 = db.客戶資料.Find(id);
-            db.客戶資料.Remove(客戶資料);
+
+            客戶資料.是否已刪除 = true;
+
+            foreach (var i in 客戶資料.客戶聯絡人)
+            {
+                i.是否已刪除 = true;
+            }
+
+            foreach (var i in 客戶資料.客戶銀行資訊)
+            {
+                i.是否已刪除 = true;
+            }
+
+            //db.客戶資料.Remove(客戶資料);
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }
