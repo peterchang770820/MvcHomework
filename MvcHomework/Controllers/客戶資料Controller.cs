@@ -120,7 +120,8 @@ namespace MvcHomework.Controllers
         /// <returns></returns>
         public ActionResult Report()
         {
-            return View();
+            var model = db.vw_Report.AsQueryable();
+            return View(model);
         }
 
         protected override void Dispose(bool disposing)
