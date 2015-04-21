@@ -12,6 +12,7 @@ namespace MvcHomework.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
 
     [MetadataType(typeof(客戶聯絡人MetaData))]
     public partial class 客戶聯絡人
@@ -28,14 +29,39 @@ namespace MvcHomework.Models
         public string 職稱 { get; set; }
         [Required]
         public string 姓名 { get; set; }
+
         [Required]
         [DataType(DataType.EmailAddress)]
+        [在同客戶下判斷信箱不重複Attribute]
         public string Email { get; set; }
         [Required]
-        [RegularExpression(@"\d{4}-\d{6}",ErrorMessage="格式有誤，EX: 0911-123456")]
+        [RegularExpression(@"\d{4}-\d{6}", ErrorMessage = "格式有誤，EX: 0911-123456")]
         public string 手機 { get; set; }
         [Required]
         public string 電話 { get; set; }
-    
+
     }
+
+    public class 在同客戶下判斷信箱不重複Attribute : ValidationAttribute
+    {
+        protected override ValidationResult IsValid(object value
+            , ValidationContext validationContext)
+        {
+            if (value != null)
+            {
+                var model = (客戶聯絡人)validationContext.ObjectInstance;
+
+                using (客戶資料Entities db = new 客戶資料Entities())
+                {
+                    if (db.客戶聯絡人.Where(c => c.客戶Id == model.客戶Id)
+                    .Any(c => c.Email.Trim().Equals(model.Email.Trim())))
+                    {
+                        return new ValidationResult("這信箱在該客戶下的所有聯絡人已經被使用了。");
+                    }
+                }
+            }
+            return base.IsValid(value, validationContext);
+        }
+    }
+
 }
